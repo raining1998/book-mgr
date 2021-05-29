@@ -1,9 +1,9 @@
-import {defineComponent,ref,onMounted} from 'vue';
-import {useRouter,useRoute} from 'vue-router'
+import { defineComponent, ref, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router'
 import menu from '@/config/menu';//导航栏数组
 
 export default defineComponent({
-    setup(){
+    setup() {
         const router = useRouter();
         const route = useRoute();
 
@@ -17,7 +17,7 @@ export default defineComponent({
             //二级目录的自动展开
             menu.forEach((item) => {
                 (item.children || []).forEach((child) => {
-                    if(child.url === router.path){
+                    if (child.url === router.path) {
                         openKeys.value.push(item.title);
                     }
                 });
@@ -28,7 +28,7 @@ export default defineComponent({
             router.push(url);
         };
 
-        return{
+        return {
             openKeys,
             selectedKeys,
             menu,
