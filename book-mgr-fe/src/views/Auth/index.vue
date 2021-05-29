@@ -9,22 +9,22 @@
 
         <div class="form">
             <a-tabs>
-                <a-tab-pane key="1" tab="登陆">
+               <a-tab-pane key="1" tab="登录">   <!-- 标签页 -->
                     <div class="item">  
                        <a-input szie="large" placeholder="账号" v-model:value="loginForm.account">
                           <template v-slot:prefix><UserOutlined /></template>
                         </a-input> 
                     </div>
                     <div class="item">
-                       <a-input szie="large"  placeholder="密码" v-model:value="loginForm.password">
+                       <a-input type="password" szie="large"  placeholder="密码" v-model:value="loginForm.password">
                           <template v-slot:prefix><LockOutlined /></template>
                        </a-input>
                     </div>
                     <div class="item">
-                       <a href="">忘记密码</a>
+                       <a href="javascript:;" @click="forgetPassword">忘记密码</a>
                     </div> 
                     <div class="item">
-                       <a-button szie="large"  type="primary" @click="login">登陆</a-button>
+                       <a-button szie="large"  type="primary" @click="login">登录</a-button>
                     </div>
                    
                 </a-tab-pane>
@@ -36,7 +36,7 @@
                        </a-input> 
                     </div>
                     <div class="item">
-                       <a-input szie="large" placeholder="密码" v-model:value="regForm.password">
+                       <a-input type="password" szie="large" placeholder="密码" v-model:value="regForm.password">
                           <template v-slot:prefix><LockOutlined /></template>
                        </a-input> 
                     </div>
@@ -55,7 +55,7 @@
     </div>
 </template>
 
-<script src="./index.js"></script>
+<script src="./index.jsx"></script>
 
 <style lang="scss" scpoed>
     @import './index.scss';

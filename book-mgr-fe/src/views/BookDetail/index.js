@@ -5,6 +5,7 @@ import { book,inventoryLog } from '@/service';
 import { CheckOutlined } from '@ant-design/icons-vue' 
 import { message } from 'ant-design-vue';
 import Update from '@/views/Books/Update/index.vue';
+import {getClassifyTitleById} from '@/helpers/book-classify';
 
 //表格列相关的数据  是一个数组
 const columns = [
@@ -110,6 +111,7 @@ export default defineComponent({
             logFilter,
             curLogType,
             logCurPage,
+            getClassifyTitleById,
         };
     },
 });

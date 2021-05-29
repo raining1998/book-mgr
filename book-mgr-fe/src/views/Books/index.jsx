@@ -1,8 +1,9 @@
 import {defineComponent,ref,onMounted} from 'vue';
-import {book} from '@/service';
+import {book,bookClassify} from '@/service';
 import {useRouter} from 'vue-router'
 import {message,Modal,Input} from 'ant-design-vue';
 import {result,formatTimestamp} from '@/helpers/utils';
+import {getClassifyTitleById} from '@/helpers/book-classify';
 import AddOne from './AddOne/index.vue';
 import Update from './Update/index.vue';
 
@@ -22,6 +23,9 @@ export default defineComponent ({
             {
                 title:'分类',
                 dataIndex:'classify',
+                slots:{
+                    customRender:'classify',
+                },
             },
             {
                 title:'作者',
@@ -62,6 +66,19 @@ export default defineComponent ({
         const keyword = ref('');
         const isSearch = ref(false); //是否为搜索状态
         const curEditBook = ref({});
+        //const classifyLoading = ref(true);
+
+        //获取图书列表
+        // const getBookClassify = async() => {
+        //     classifyLoading.value = true;
+        //     const res = await bookClassify.list();
+        //     classifyLoading.value = false;
+
+        //     result(res)
+        //         .success(({data}) => {
+        //             bookClassifyList.value = data;
+        //         });
+        // };
 
         //获取书籍列表
         const getList = async () => {
@@ -213,6 +230,9 @@ export default defineComponent ({
             curEditBook,
             updateCurBook,
             toDetail,
+            getList,
+            getClassifyTitleById,
+           
         };
     },
 });

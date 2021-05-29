@@ -7,12 +7,21 @@ export default defineComponent({
         const router = useRouter();
         const route = useRoute();
 
-        const openKeys = ref([]);//当前展开的SubMenu菜单项key数组
+        const openKeys = ref(['其他管理']);//当前展开的SubMenu菜单项key数组
         const selectedKeys = ref([]);//当前选中的菜单项key数组
 
         onMounted(() => {
             //console.log(route);
             selectedKeys.value = [route.path]; //path每个导航菜单的key-》vue key是url 
+
+            //二级目录的自动展开
+            menu.forEach((item) => {
+                (item.children || []).forEach((child) => {
+                    if(child.url === router.path){
+                        openKeys.value.push(item.title);
+                    }
+                });
+            });
         });
 
         const to = (url) => {

@@ -173,7 +173,7 @@ router.post('/update/character',async(ctx) => {
     };
 });
 
-router.get('/info',async(ctx) => {
+router.get('/info',async(ctx) => {  //通过token来换取用户的信息
     //token是从前端带上来的 放在http请求 header里 请求头在Authorization：Bearer $%^64787hgsd 
     //console.log(getToken(ctx));
     ctx.body = { 

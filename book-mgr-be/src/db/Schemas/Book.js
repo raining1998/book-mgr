@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { getMeta,preSave } = require('../helpers');
 
 const BookSchema = new mongoose.Schema({
-    //书名
+    //图书名
     name:String,
     //分类
     classify:String,

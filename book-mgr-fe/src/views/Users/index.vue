@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-card>
+        <a-card v-only-admin>
             <h2>用户管理</h2>
 
             <a-divider></a-divider>
@@ -33,8 +33,8 @@
                     </template>
 
                     <template #character="{record}">
-                        {{getCharacterInfoById(record.character).title}} &nbsp;&nbsp;
-                        <a href="javascript:;" @click="onEdit(record)"><EditOutlined/></a>
+                        <a href="javascript:;" @click="onEdit(record)"><EditOutlined/></a>&nbsp;
+                        {{getCharacterInfoById(record.character).title}} 
                     </template>
 
                     <template #actions="{record}">

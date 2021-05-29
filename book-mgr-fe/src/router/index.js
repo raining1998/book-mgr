@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
+import {user} from '@/service';
 import store from '@/store';
+import {message} from 'ant-design-vue';
 
 const routes = [
   {
@@ -10,6 +12,7 @@ const routes = [
   {
     path: '/',
     name: 'BasicLayout',
+    redirect:'/auth',
     component: () => import(/* webpackChunkName: "BasicLayout" */ '../layout/BasicLayout/index.vue'),
     
     children:[
@@ -28,6 +31,36 @@ const routes = [
         name: 'User',
         component: () => import(/* webpackChunkName: "User" */ '../views/Users/index.vue'),
       },
+      {
+        path: 'log',
+        name: 'Log',
+        component: () => import(/* webpackChunkName: "Log" */ '../views/Log/index.vue'),
+      },
+      {
+        path: 'reset/password',
+        name: 'ResetPassword',
+        component: () => import(/* webpackChunkName: "ResetPassword" */ '../views/ResetPassword/index.vue'),
+      },
+      {
+        path: 'invite-code',
+        name: 'InviteCode',
+        component: () => import(/* webpackChunkName: "InviteCode" */ '../views/InviteCode/index.vue'),
+      },
+      {
+        path: 'book-classify',
+        name: 'BookClassify',
+        component: () => import(/* webpackChunkName: "BookClassify" */ '../views/BookClassify/index.vue'),
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: () => import(/* webpackChunkName: "Profile" */ '../views/Profile/index.vue'),
+      },
+      {
+        path: 'dashboard',
+        name: 'Dashboard',
+        component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard/index.vue'),
+      },
     ],
   },
 
@@ -39,10 +72,54 @@ const router = createRouter({
 });
 
 router.beforeEach(async(to,from,next) => {  // to目标页的信息  from从那个页面来的信息  next下一步
-  if(!store.state.characterInfo.length){
-    await store.dispatch('getCharacterInfo'); //数据获取
+  let res = {};
+
+  try{
+    res = await user.info();
+  }catch(e){
+    if(e.message.includes('code 401')){
+      res.code = 401;
+    }
   }
-  await store.dispatch('getUserInfo');
+
+  const {code} = res;
+
+  if(code === 401){
+    if(to.path === '/auth'){
+      next();
+      return;
+    }
+
+    message.error('认证失败，请重新输入');
+    next('/auth');
+
+    return;
+  }
+
+
+
+
+  if(!store.state.characterInfo.length){//window.characterInfo
+    await store.dispatch('getCharacterInfo');//数据获取
+  }
+
+  const reqArr = [];
+
+  if(!store.state.userInfo.account){
+    reqArr.push(store.dispatch('getUserInfo')) ;//数据获取
+  }
+
+  if (!store.state.bookClassify.length) {
+    reqArr.push(store.dispatch('getBookClassify'));
+  }
+
+  await Promise.all(reqArr);
+
+  if(to.path === '/auth'){
+    next('/books');
+    return;
+  }
+
   next();
 });
 

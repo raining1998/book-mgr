@@ -1,18 +1,19 @@
 //认证相关的前端的接口请求 
-import axios from 'axios';
+import { post } from '@/helpers/request';
 //注册 
 export const register = (account,password,inviteCode) => {
-    return axios.post('http://localhost:3000/auth/register',{
+    return post('/auth/register',{
         account,
         password,
         inviteCode,
     });
 };
-//登陆
+//登录
 export const login = (account,password) => {
-    return axios.post('http://localhost:3000/auth/login',{
+    return post('/auth/login',{
         account,
         password,
     });
 };
+
 

@@ -3,19 +3,23 @@ const Koa = require('koa'); //引进koa包
 const koaBody = require('koa-body');
 const {connect} = require('./db');
 const registerRoutes = require('./routers');
-const {middleware:koaJwtMiddleware,catchTokenError} = require('./helpers/token');
+const {middleware:koaJwtMiddleware,catchTokenError, checkUser} = require('./helpers/token');
+const {logMiddleware} = require('./helpers/log');
 const cors = require('@koa/cors');
 
-const app = new Koa();
+const app = new Koa(); //生成实例赋值给app
 
 connect().then(() => {
     app.use(cors());
     app.use(koaBody());
 
-    app.use(catchTokenError); //一定要在 koaJwtMiddleware(app); 之前
+    app.use(catchTokenError); //一定要在 koaJwtMiddleware(app); 
 
     koaJwtMiddleware(app);
-    
+
+ 
+    app.use(logMiddleware);
+
     registerRoutes(app);
 
     //开启一个http服务

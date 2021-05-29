@@ -1,19 +1,30 @@
 <template>
     <div>
         <a-modal 
-            title="添加书籍" 
+            title="修改图书" 
             :visible="props.show"
             @ok="submit"
             @cancel="close">
-
+ 
             <a-form :label-col="{span:6}" >
                 <a-form-item label="书名">
                     <a-input v-model:value="editForm.name" />
                 </a-form-item>
 
                 <a-form-item label="分类">
-                    <a-input v-model:value="editForm.classify" />
-                </a-form-item>
+                    <a-select
+                        v-model:value="editForm.classify"
+                        style="width: 120px"
+                    >
+                        <a-select-option
+                        v-for="item in store.bookClassify"
+                        :key="item._id"
+                        :value="item._id"
+                        >
+                        {{ item.title }}
+                        </a-select-option>
+                    </a-select>
+                 </a-form-item>
 
                 <a-form-item label="作者">
                     <a-input v-model:value="editForm.author" />

@@ -78,7 +78,7 @@ router.post('/register',async(ctx) => {
         data:res,
     };
 });
-//-------------登陆
+//------------登录
 router.post('/login',async(ctx) => {
     const {
         account,
@@ -119,9 +119,9 @@ router.post('/login',async(ctx) => {
     if(one.password === password){
         ctx.body = {
             code:1,
-            msg:'登陆成功',
+            msg:'登录成功',
             data:{
-                user,
+                user, 
                 token:jwt.sign(user,config.JWT_SECRET),
             },
         };

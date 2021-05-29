@@ -3,7 +3,7 @@
         <a-card>
             <space-between>
                 <h2>{{d.name}}</h2>
-                <div>
+                <div v-only-admin>
                     <a-button size="small" type="primary" @click="showUpdateModal = true">编辑</a-button>&nbsp;
                     <a-button size="small" type="danger" @click="remove">删除</a-button>
                 </div>
@@ -19,7 +19,9 @@
                     </div>
                     <div class="item">
                         <div class="title">分类</div>
-                        <div class="content">{{d.classify}}</div>
+                        <div class="content">
+                             {{ getClassifyTitleById(d.classify) }} 
+                        </div>
                     </div>
                     <div class="item">
                         <div class="title">价格</div>
